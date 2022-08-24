@@ -1,0 +1,11 @@
+export const breakfast = require('./breakfast.png');
+export const lunch = require('./lunch.png');
+export const dinner = require('./dinner.png');
+export const desert = require('./desert.png');
+export const appetizer = require('./appetizer.png');
+export const drink = require('./drink.png');
+export const fingerfood = require('./fingerfood.png');
+export const salad = require('./salad.png');
+export const sauce = require('./sauce.png');
+export const snack = require('./snack.png');
+export const soup = require('./soup.png');

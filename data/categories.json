@@ -1,0 +1,62 @@
+[
+    {
+        "id": "c1",
+        "name": "Breakfast",
+        "categoryColor": "#f5428d"
+    },
+    {
+        "id": "c2",
+        "name": "Lunch",
+        "categoryColor": "#f54242"
+    },
+    {
+        "id": "c3",
+        "name": "Dinner",
+        "categoryColor": "#f5a442"
+    },
+    {
+        "id": "c4",
+        "name": "Appetizer",
+        "categoryColor": "#f5d142"
+    },
+    {
+        "id": "c5",
+        "name": "Dessert",
+        "categoryColor": "#368dff"
+    },
+    {
+        "id": "c6",
+        "name": "Soup",
+        "categoryColor": "#41d95d"
+    },
+    {
+        "id": "c7",
+        "name": "Snack",
+        "categoryColor": "#9eecff"
+    },
+    {
+        "id": "c8",
+        "name": "Salad",
+        "categoryColor": "#b9ffb0"
+    },
+    {
+        "id": "c9",
+        "name": "Drinks",
+        "categoryColor": "#ffc7ff"
+    },
+    {
+        "id": "c10",
+        "name": "Marinade",
+        "categoryColor": "#47fced"
+    },
+    {
+        "id": "c11",
+        "name": "Sauce",
+        "categoryColor": "#f5428d"
+    },
+    {
+        "id": "c12",
+        "name": "Finger foods",
+        "categoryColor": "#f54242"
+    }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "id": "c1",
+        "name": "Breakfast",
+        "categoryColor": "#f5428d"
+    },
+    {
+        "id": "c2",
+        "name": "Quick & Easy",
+        "categoryColor": "#f54242"
+    },
+    {
+        "id": "c3",
+        "name": "Hamburgers",
+        "categoryColor": "#f5a442"
+    },
+    {
+        "id": "c4",
+        "name": "German",
+        "categoryColor": "#f5d142"
+    },
+    {
+        "id": "c5",
+        "name": "Light & Lovely",
+        "categoryColor": "#368dff"
+    },
+    {
+        "id": "c6",
+        "name": "Exotic",
+        "categoryColor": "#41d95d"
+    },
+    {
+        "id": "c7",
+        "name": "Breakfast",
+        "categoryColor": "#9eecff"
+    },
+    {
+        "id": "c8",
+        "name": "Asian",
+        "categoryColor": "#b9ffb0"
+    },
+    {
+        "id": "c9",
+        "name": "French",
+        "categoryColor": "#ffc7ff"
+    },
+    {
+        "id": "c10",
+        "name": "Summer",
+        "categoryColor": "#47fced"
+    }
+]
