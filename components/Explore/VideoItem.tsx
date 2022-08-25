@@ -1,12 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Button, Platform } from 'react-native';
-import { Video, AVPlaybackStatus } from 'expo-av';
 import { WebView } from 'react-native-webview';
 
 
 export default function VideoItem({ uri }: { uri: string }) {
-    const video = React.useRef<any>(null);
-    const [status, setStatus] = React.useState<any>({});
 
     return (
         <View style={styles.container}>

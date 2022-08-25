@@ -9,6 +9,7 @@ import Loading from './components/Loading';
 import AuthenticatedRoutes from './utils/AuthenticatedRoutes';
 import AuthScreen from './screens/AuthScreen'
 
+
 export default function App() {
 
   const [isReady, setIsReady] = React.useState(false)
