@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Pressable, StyleSheet, Text } from 'react-native'
 import Colors from '../utils/colors'
 
-export default function Button({ style, children, onPress, disabled }: { style?: object, children: string, onPress: () => void, disabled: boolean }) {
+export default function Button({ style, children, onPress, disabled }: { style?: object, children: any, onPress: () => void, disabled: boolean }) {
 
 
     return (
@@ -29,7 +29,11 @@ const styles = StyleSheet.create({
         borderRadius: 48,
         marginTop: 50,
         backgroundColor: Colors.dark,
-        marginHorizontal: 2
+        marginHorizontal: 2,
+        shadowOffset: { width: 2, height: 2 },
+        shadowRadius: 4,
+        shadowOpacity: 1,
+        elevation: 4,
 
     },
     buttonText: {

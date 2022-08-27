@@ -48,6 +48,17 @@ export default function Recommended() {
 
     }
 
+    async function getMoreData() {
+        setIsFetching(true)
+
+        let newdata = await UseFetchRecipes({
+            query: query,
+            dietary_needs: profileInfo.dietary_needs
+        })
+        setIsFetching(false)
+
+    }
+
     function getTimeOfDay() {
         let hour = currentDate.getHours()
 

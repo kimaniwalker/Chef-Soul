@@ -8,13 +8,17 @@ import Heading from '../../styles/heading'
 import { useUserContext } from '../../context/user'
 import { useNavigation } from '@react-navigation/native';
 import { getUser, storeUser } from '../../utils/localStorage'
+import AppleLogin from './AppleLogin'
+import GoogleLogin from './GoogleLogin'
+import Colors from '../../utils/colors'
+import * as AppleAuthentication from 'expo-apple-authentication';
 
 
 export default function Auth({ setIsAuthenticated }: any) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
-    const { isFetching, user, session } = useUserContext()
+    const { isFetching, user, setUserId } = useUserContext()
     const [focused, setFocused] = useState(false)
 
 
@@ -31,7 +35,7 @@ export default function Auth({ setIsAuthenticated }: any) {
         })
 
         if (user) {
-            await storeUser(user)
+            //await storeUser(user)
             setIsAuthenticated(true)
         }
         if (error) Alert.alert(error.message)
@@ -45,12 +49,13 @@ export default function Auth({ setIsAuthenticated }: any) {
             email: email,
             password: password,
         })
+        if (!user) Alert.alert('Something went wrong')
 
         if (user) {
             const { data, error } = await supabase
                 .from('profiles')
                 .insert([
-                    { id: user.id, username: user.email }
+                    { id: user.id, username: user.email, userId: user.id }
                 ])
             if (error) Alert.alert(error.message)
         }
@@ -60,9 +65,21 @@ export default function Auth({ setIsAuthenticated }: any) {
 
     async function checkLogin() {
 
-        if (user && session) {
-            setIsAuthenticated(true)
+        try {
+            let user = await getUser()
+            if (user && user.user) {
+                let credentials = await AppleAuthentication.getCredentialStateAsync(user.user)
+                if (credentials == 1) {
+                    setUserId(user.user)
+
+                }
+            }
+
+
+        } catch (error: any) {
+            Alert.alert(error.message)
         }
+
     }
 
 
@@ -73,35 +90,14 @@ export default function Auth({ setIsAuthenticated }: any) {
         <Wrapper>
 
             <Container style={styles.container}>
-                <Heading style={{ textAlign: 'center', marginBottom: 25 }}>Choose from thousands of online recipes and find the perfect meal for you or your family.</Heading>
-                <TextInput
-                    onFocus={() => setFocused(true)}
-                    style={[!focused ? styles.input : styles.inputFocused]}
-                    onChangeText={(text) => setEmail(text)}
-                    value={email}
-                    placeholder="email@address.com"
-                    autoCapitalize={'none'}
-                />
 
+                <Heading style={{ textAlign: 'center', marginBottom: 75 }}>Choose from thousands of online recipes and find the perfect meal for you or your family.</Heading>
 
-                <TextInput
-                    style={[!focused ? styles.input : styles.inputFocused]}
-                    onChangeText={(text) => setPassword(text)}
-                    value={password}
-                    secureTextEntry={true}
-                    placeholder="Password"
-                    autoCapitalize={'none'}
-                />
-
-
-                <Container style={{ flexDirection: 'row', flex: 0 }}>
-
-
-                    <Button style={{ width: '50%' }} disabled={isFetching} onPress={() => signInWithEmail()}>Sign In</Button>
-
-
-                    <Button style={{ width: '50%' }} disabled={isFetching} onPress={() => signUpWithEmail()} >Sign Up</Button>
+                <Container style={{ flex: 0, alignItems: 'flex-start' }}>
+                    <AppleLogin setUserId={setUserId} setIsAuthenticated={setIsAuthenticated} />
+                    <GoogleLogin />
                 </Container>
+
 
 
             </Container>

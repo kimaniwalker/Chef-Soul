@@ -1,3 +1,4 @@
+import 'react-native-url-polyfill/auto'
 import React from 'react'
 import { ImageBackground, Pressable, View, Text, StyleSheet, Alert } from 'react-native'
 import SubHeading from '../../styles/subheading'
@@ -52,12 +53,20 @@ export default function MealsItem({ id, title, image }: { id: number, title: str
     async function updateFavorites() {
 
         try {
+            const updates = {
+                id: profileInfo.id,
+                username: profileInfo.username,
+                favorites: favorites,
+                updated_at: new Date(),
+            };
 
-            const { data, error } = await supabase
-                .from('profiles')
-                .upsert({ id: profileInfo.id, favorites: favorites, updated_at: new Date() })
-            await storeFavorites(favorites)
+            let { error } = await supabase
+                .from("profiles")
+                .upsert(updates, { returning: "minimal" });
 
+            if (error) {
+                throw error;
+            }
         } catch (error: any) {
             Alert.alert(
                 "Something went wrong",
@@ -66,6 +75,8 @@ export default function MealsItem({ id, title, image }: { id: number, title: str
                     { text: "OK" }
                 ]
             );
+        } finally {
+
         }
     }
 

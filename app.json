@@ -11,6 +11,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+    "scheme": "ChefSoul",
     "updates": {
       "fallbackToCacheTimeout": 0
     },

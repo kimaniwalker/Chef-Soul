@@ -23,14 +23,14 @@ export default function App() {
   }
 
   const Navigation = () => {
-    const { user, isAuthenticated, profileInfo } = useUserContext()
+    const { isAuthenticated, profileInfo } = useUserContext()
 
     return (
       <NavigationContainer>
         {!isAuthenticated && (
           <AuthScreen />
         )}
-        {isAuthenticated && user && profileInfo && (
+        {isAuthenticated && profileInfo && (
           <AuthenticatedRoutes />
         )}
       </NavigationContainer>
