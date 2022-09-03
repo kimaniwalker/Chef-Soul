@@ -59,12 +59,13 @@ type params = {
     diet?: string,
     includeIngredients?: string,
     excludeIngredients?: string
-    number?: number
+    number?: number,
+    offset?: number
 }
 
 export async function UseGetRecipeVideos(params: params) {
 
-    const RECIPE_URL = `https://api.spoonacular.com/food/videos/search?apiKey=${SPOONACULAR_KEY}&query=${params.query}&diet=${params.diet}&excludeIngredients=${params.excludeIngredients}&type=${params.type}&number=10`
+    const RECIPE_URL = `https://api.spoonacular.com/food/videos/search?apiKey=${SPOONACULAR_KEY}&query=${params.query}&diet=${params.diet}&excludeIngredients=${params.excludeIngredients}&type=${params.type}&number=10&offset=${params.offset}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',

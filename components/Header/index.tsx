@@ -22,10 +22,10 @@ export default function Header({ logoOnly }: { logoOnly?: boolean }) {
                     <View style={styles.row}>
 
                         {logoOnly ? (
-                            <Image style={styles.image} source={require('../../assets/logo3.png')} />
+                            <Image style={styles.image} source={require('../../assets/chefLogo.png')} />
 
                         ) : (<>
-                            <Image style={styles.image} source={require('../../assets/logo3.png')} />
+                            <Image style={styles.image} source={require('../../assets/chefLogo.png')} />
                             <Ionicons onPress={pressHandler} style={styles.search} name="search" size={38} color={Colors.secondary} />
 
                         </>)}

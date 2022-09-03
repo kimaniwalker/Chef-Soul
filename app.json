@@ -20,7 +20,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.key2designio.ChefSoul"
+      "bundleIdentifier": "com.key2designio.ChefSoul",
+      "usesAppleSignIn": true
     },
     "android": {
       "adaptiveIcon": {

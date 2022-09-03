@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import 'react-native-url-polyfill/auto'
 import { supabase } from '../utils/supabase';
 import * as SplashScreen from 'expo-splash-screen';
+import { Alert } from 'react-native'
 
 
 // Keep the splash screen visible while we fetch resources
@@ -10,9 +11,6 @@ const UserContext = createContext();
 UserContext.displayName = 'UserContext'
 
 export function UserWrapper({ children }) {
-
-    const user = supabase.auth.user()
-    const session = supabase.auth.session()
 
     const [userId, setUserId] = useState('')
     const [profileInfo, setProfileInfo] = useState([])
@@ -23,16 +21,7 @@ export function UserWrapper({ children }) {
 
     useEffect(() => {
         fetchUser()
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if (event == 'SIGNED_OUT') {
-                setIsAuthenticated(false)
-            }
-            if (event == 'SIGNED_IN') {
-                setIsAuthenticated(true)
-            }
-        })
-    }, [user, session, userId, isAuthenticated])
+    }, [userId, isAuthenticated])
 
     const fetchUser = async () => {
 
@@ -42,6 +31,7 @@ export function UserWrapper({ children }) {
         } catch (e) {
             // error reading value
             setErr(e)
+            Alert.alert(e.message)
         }
     }
 
@@ -49,33 +39,23 @@ export function UserWrapper({ children }) {
         setIsFetching(true)
 
         try {
-            if (user) {
-
-                const { data, error, status } = await supabase
-                    .from("profiles")
-                    .select()
-                    .eq("id", user.id)
-                    .single();
-                setProfileInfo(data)
-            } else {
-                const { data, error, status } = await supabase
-                    .from("profiles")
-                    .select()
-                    .eq("userId", userId)
-                    .single();
-                setProfileInfo(data)
-                if (data) {
-                    setIsAuthenticated(true)
-                }
+            const { data, error, status } = await supabase
+                .from("profiles")
+                .select()
+                .eq("userId", userId)
+                .single();
+            setProfileInfo(data)
+            if (data) {
+                setIsAuthenticated(true)
             }
-            if (error && status !== 406) {
+            if (error) {
                 throw error;
             }
-
 
         } catch (e) {
             // error reading value
             setErr(e.message)
+
         }
         setIsFetching(false)
     }
@@ -84,7 +64,6 @@ export function UserWrapper({ children }) {
         setIsFetching(true)
 
         try {
-
             const { data, error, status } = await supabase
                 .from("profiles")
                 .select()
@@ -106,6 +85,7 @@ export function UserWrapper({ children }) {
         } catch (e) {
             // error reading value
             setErr(e.message)
+            Alert.alert(e.message)
         }
 
     }
@@ -113,7 +93,7 @@ export function UserWrapper({ children }) {
 
 
     return (
-        <UserContext.Provider value={{ user, session, errMsg: err, isFetching, profileInfo, isAuthenticated, setIsAuthenticated, userId, setUserId, checkUserExist }} >
+        <UserContext.Provider value={{ errMsg: err, isFetching, profileInfo, isAuthenticated, setIsAuthenticated, userId, setUserId, checkUserExist }} >
             {children}
         </UserContext.Provider>
     );

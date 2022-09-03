@@ -15,9 +15,8 @@ export async function storeFavorites(value: any) {
 
 export async function removeItem(value: string) {
     await AsyncStorage.removeItem(value)
+
 }
-
-
 
 export async function getFavorites() {
 

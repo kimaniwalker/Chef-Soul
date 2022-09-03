@@ -8,13 +8,12 @@ import Colors from "../../utils/colors";
 import Loading from "../Loading";
 import { removeItem } from "../../utils/localStorage";
 import { useUserContext } from "../../context/user";
-import FavoritesScreen from "../../screens/FavoritesScreen";
 import { useFavoritesContext } from "../../context/favorites";
 
 
 
 export default function Account({ profileInfo }: { profileInfo: any }) {
-    const { setUserId } = useUserContext()
+    const { setUserId, setIsAuthenticated } = useUserContext()
     const { favorites } = useFavoritesContext()
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
@@ -24,9 +23,9 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
     const [dietary_needs, setDietaryNeeds] = useState({});
     const [avatar_url, setAvatarUrl] = useState("");
     const [focused, setFocused] = useState(false)
-    const [isAuthenticated, setIsAuthenticated] = useState(true)
 
     useEffect(() => {
+
         if (profileInfo) {
             setLoading(true)
             setIntolerances(profileInfo?.dietary_needs.intolerances)
@@ -103,11 +102,8 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                             {
                                 diet?.length >= 1 && (
                                     diet.split(",").map(item => (
-
-
                                         <View key={item} style={styles.tag}>
                                             <Text style={styles.tagItem}>{item}</Text>
-
                                         </View>
 
                                     ))
@@ -176,11 +172,10 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                 <Button
                     style={{ width: '50%', marginTop: 0 }}
                     disabled={loading} onPress={() => {
-                        supabase.auth.signOut()
                         removeItem('user')
                         removeItem('favorites')
                         setUserId(null)
-
+                        setIsAuthenticated(false)
                     }}>Sign Out</Button>
             </View>
 

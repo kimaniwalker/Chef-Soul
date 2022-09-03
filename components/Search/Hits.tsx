@@ -1,24 +1,21 @@
 import React from 'react';
-import { StyleSheet, View, FlatList, Text } from 'react-native';
+import { StyleSheet, FlatList } from 'react-native';
 import MealsItem from '../Meals/MealsItem';
 
-export function Hits({ hits }: any) {
+export function Hits({ hits, fetching, getMoreData }: { hits: any, fetching: boolean, getMoreData: () => void }) {
 
 
     return (
         <FlatList
-            data={hits.results}
+            data={hits}
             keyExtractor={(item) => item.id}
-            //ItemSeparatorComponent={() => <View style={styles.separator} />}
             onEndReached={() => {
-
+                getMoreData()
             }}
+            onEndReachedThreshold={0.5}
             numColumns={2}
             renderItem={({ item }) => (
                 <MealsItem id={item.id} title={item.title} image={item.image} />
-                /*  <View style={styles.item}>
-                     <Text>{item.title}</Text>
-                 </View> */
             )}
         />
     );

@@ -40,8 +40,8 @@ export default function Videos() {
             query: query,
             type: query,
             diet: profileInfo.diet,
-            excludeIngredients: profileInfo.excluded
-
+            excludeIngredients: profileInfo.excluded,
+            offset: Math.floor(Math.random() * 15)
         })
         setData(data)
         setIsFetching(false)

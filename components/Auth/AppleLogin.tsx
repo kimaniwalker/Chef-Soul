@@ -3,9 +3,12 @@ import 'react-native-url-polyfill/auto'
 import { supabase } from '../../utils/supabase'
 import { Alert, Pressable, StyleSheet } from 'react-native';
 import { storeUser } from '../../utils/localStorage';
+import { useUserContext } from '../../context/user';
+
 
 
 export default function AppleLogin({ setUserId, setIsAuthenticated }: any) {
+    const { checkUserExist } = useUserContext()
     return (
         <AppleAuthentication.AppleAuthenticationButton
             buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
@@ -27,13 +30,18 @@ export default function AppleLogin({ setUserId, setIsAuthenticated }: any) {
 
                     // signed inq
                     if (credential && credential.email) {
-                        const { data, error } = await supabase
-                            .from('profiles')
-                            .insert([
-                                { userId: credential.user, username: credential.email }
-                            ])
 
-                        if (error) Alert.alert(error.message)
+                        let userExist = await checkUserExist(credential.email)
+
+                        if (!userExist) {
+                            const { data, error } = await supabase
+                                .from('profiles')
+                                .insert([
+                                    { userId: credential.user, username: credential.email }
+                                ])
+
+                            if (error) throw error
+                        }
                     }
                     setUserId(credential.user)
                     storeUser(credential)
@@ -43,6 +51,8 @@ export default function AppleLogin({ setUserId, setIsAuthenticated }: any) {
                         // handle that the user canceled the sign-in flow
                     } else {
                         // handle other errors
+                        setIsAuthenticated(false)
+                        Alert.alert(e.message)
                     }
                 }
             }}
