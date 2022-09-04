@@ -13,10 +13,6 @@ export default function Category({ navigation }: { navigation: any }) {
         })
     }
 
-    React.useLayoutEffect(() => {
-
-    }, []);
-
     return (
         <>
             <Header />

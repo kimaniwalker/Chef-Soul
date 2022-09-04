@@ -34,7 +34,7 @@ export default function MealsScreen(route: any) {
 
     async function getMoreData() {
 
-        if (results.length < 30) {
+        if (results.length < 40) {
             let newdata = await UseFetchRecipes({
                 query: query,
                 dietary_needs: profileInfo.dietary_needs,

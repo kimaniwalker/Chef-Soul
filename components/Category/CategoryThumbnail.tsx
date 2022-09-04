@@ -43,7 +43,7 @@ export default function CategoryThumbnail() {
                             <Category name='sauce' id={109} image={CategoryImages.sauce} />
                             <Category name='salad' id={110} image={CategoryImages.salad} />
                             <Category name='soup' id={111} image={CategoryImages.soup} />
-                            <Category name='salad' id={112} image={CategoryImages.appetizer} />
+                            <Category name='appetizer' id={112} image={CategoryImages.appetizer} />
                         </View>
                     </ScrollView>
                 </View>

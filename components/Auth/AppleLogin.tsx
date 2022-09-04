@@ -2,7 +2,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 import 'react-native-url-polyfill/auto'
 import { supabase } from '../../utils/supabase'
 import { Alert, Pressable, StyleSheet } from 'react-native';
-import { storeUser } from '../../utils/localStorage';
+import { removeItem, storeUser } from '../../utils/localStorage';
 import { useUserContext } from '../../context/user';
 
 
@@ -49,6 +49,7 @@ export default function AppleLogin({ setUserId, setIsAuthenticated }: any) {
                 } catch (e: any) {
                     if (e.code === 'ERR_CANCELED') {
                         // handle that the user canceled the sign-in flow
+                        setIsAuthenticated(false)
                     } else {
                         // handle other errors
                         setIsAuthenticated(false)

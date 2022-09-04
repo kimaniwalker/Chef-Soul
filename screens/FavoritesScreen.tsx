@@ -7,6 +7,7 @@ import Container from '../styles/container'
 import SubHeading from '../styles/subheading'
 import { UseGetFavoritesInfo } from '../utils/useFetchRecipes'
 import Colors from '../utils/colors'
+import Header from '../components/Header'
 
 export default function FavoritesScreen() {
 
@@ -35,10 +36,11 @@ export default function FavoritesScreen() {
     }
 
     if (isFetching) return <Loading />
-    if (favData.length < 1) return <Container><SubHeading style={{ color: Colors.error }}>You don't have any recipes in your favorites. Navigate to the explore screen and find something you like.</SubHeading></Container>
+    if (favData.length < 1) return <Container><SubHeading style={{ color: Colors.error, textAlign: 'center' }}>You don't have any recipes in your favorites. Navigate to the explore screen and find something you like.</SubHeading></Container>
     return (
         <>
-            <Container style={{ marginTop: 60, alignItems: 'flex-start' }}>
+            <Header />
+            <Container style={{ marginTop: 0, alignItems: 'center' }}>
 
                 <FlatList
                     data={favData}

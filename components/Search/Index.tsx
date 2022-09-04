@@ -55,7 +55,6 @@ export default function Search() {
 
     return (
         <>
-            <Header logoOnly />
             <View style={{ justifyContent: 'flex-start', padding: 16 }}>
 
                 <TextInput
