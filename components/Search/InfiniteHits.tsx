@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, FlatList, Text, Pressable, Alert } from 'react-native';
+import { StyleSheet, View, FlatList, Text, Pressable } from 'react-native';
 import Loading from '../Loading';
 import { useNavigation } from '@react-navigation/native';
 

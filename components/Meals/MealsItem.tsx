@@ -1,6 +1,6 @@
 import 'react-native-url-polyfill/auto'
 import React from 'react'
-import { ImageBackground, Pressable, View, Text, StyleSheet, Alert } from 'react-native'
+import { ImageBackground, Pressable, View, StyleSheet, Alert } from 'react-native'
 import SubHeading from '../../styles/subheading'
 import Colors from '../../utils/colors'
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useFavoritesContext } from '../../context/favorites';
 import { supabase } from '../../utils/supabase';
 import { useUserContext } from '../../context/user';
-import { storeFavorites } from '../../utils/localStorage';
+
 
 export default function MealsItem({ id, title, image }: { id: number, title: string, image: string, }) {
 

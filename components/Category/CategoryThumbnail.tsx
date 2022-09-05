@@ -3,7 +3,6 @@ import { ImageBackground, ScrollView, StyleSheet, View, Platform, Pressable } fr
 import Button from '../../styles/button'
 import Heading from '../../styles/heading'
 import SubHeading from '../../styles/subheading'
-import CategoryItem from './CategoryItem'
 import * as Images from '../../assets'
 import { useNavigation } from '@react-navigation/native';
 

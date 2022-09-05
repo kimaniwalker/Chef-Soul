@@ -12,7 +12,7 @@ import * as AppleAuthentication from 'expo-apple-authentication';
 
 export default function Auth({ setIsAuthenticated }: any) {
 
-    const { isFetching, user, setUserId } = useUserContext()
+    const { user, setUserId } = useUserContext()
 
 
     React.useEffect(() => {

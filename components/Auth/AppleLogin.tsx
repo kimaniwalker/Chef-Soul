@@ -1,8 +1,8 @@
 import * as AppleAuthentication from 'expo-apple-authentication';
 import 'react-native-url-polyfill/auto'
 import { supabase } from '../../utils/supabase'
-import { Alert, Pressable, StyleSheet } from 'react-native';
-import { removeItem, storeUser } from '../../utils/localStorage';
+import { Alert } from 'react-native';
+import { storeUser } from '../../utils/localStorage';
 import { useUserContext } from '../../context/user';
 
 
@@ -62,11 +62,3 @@ export default function AppleLogin({ setUserId, setIsAuthenticated }: any) {
     );
 }
 
-const styles = StyleSheet.create({
-    button: {
-
-    },
-    buttonPressed: {
-        opacity: 0.5
-    },
-})

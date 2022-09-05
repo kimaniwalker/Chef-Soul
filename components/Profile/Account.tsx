@@ -168,7 +168,7 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                     style={{ width: '50%', marginTop: 0 }}
                     onPress={() => updateProfile({ username, dietary_needs, avatar_url })}
                     disabled={loading}
-                >{loading ? "Loading ..." : "Save"}</Button>
+                >{loading ? "Saving..." : "Save"}</Button>
                 <Button
                     style={{ width: '50%', marginTop: 0 }}
                     disabled={loading} onPress={() => {

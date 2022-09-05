@@ -1,8 +1,6 @@
 import React from 'react'
 import { ScrollView, StyleSheet, View, FlatList } from 'react-native'
-import Container from '../../styles/container'
 import Heading from '../../styles/heading'
-import SubHeading from '../../styles/subheading'
 import { UseGetRecipeVideos } from '../../utils/useFetchRecipes'
 import VideoItem from './VideoItem'
 import Button from '../../styles/button'
@@ -99,34 +97,10 @@ export default function Videos() {
     )
 }
 
-const Category = (item: CategoryItem) => (
-    <>
-        <View style={styles.categoryWrapper}>
-            <View style={styles.categoryItem}>
-
-            </View>
-
-
-        </View>
-    </>
-
-)
 
 const styles = StyleSheet.create({
     wrapper: {
 
-    },
-    categoryWrapper: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 8,
-    },
-    categoryItem: {
-        width: 250,
-        height: 100,
-        borderWidth: 2,
-        marginBottom: 12
     },
     categoryRow: {
         flexDirection: 'row'

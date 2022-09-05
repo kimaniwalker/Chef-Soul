@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import MealsItem from '../Meals/MealsItem';
 
-export function Hits({ hits, fetching, getMoreData }: { hits: any, fetching: boolean, getMoreData: () => void }) {
+export function Hits({ hits, fetching, getMoreData }: { hits: any, fetching?: boolean, getMoreData: () => void }) {
 
 
     return (
