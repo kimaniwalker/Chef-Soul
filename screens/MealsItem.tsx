@@ -33,7 +33,7 @@ export default function MealsItem({ navigation, route }: { navigation: any, rout
     if (fetching) return <Loading />
     return (
         <>
-            <MealInfo data={data} />
+            <MealInfo data={data} navigation={navigation} />
         </>
     )
 }

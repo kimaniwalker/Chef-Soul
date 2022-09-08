@@ -9,6 +9,7 @@ import Loading from "../Loading";
 import { removeItem } from "../../utils/localStorage";
 import { useUserContext } from "../../context/user";
 import { useFavoritesContext } from "../../context/favorites";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 
 
@@ -23,6 +24,20 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
     const [dietary_needs, setDietaryNeeds] = useState({});
     const [avatar_url, setAvatarUrl] = useState("");
     const [focused, setFocused] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [items, setItems] = useState([
+        { label: 'Gluten Free', value: 'Gluten Free' },
+        { label: 'Vegetarian', value: 'Vegetarian' },
+        { label: 'Ketogenic', value: 'Ketogenic' },
+        { label: 'Lacto-Vegetarian', value: 'Lacto-Vegetarian' },
+        { label: 'Ovo-Vegetarian', value: 'Ovo-Vegetarian' },
+        { label: 'Pescetarian', value: 'Pescetarian' },
+        { label: 'Paleo', value: 'Paleo' },
+        { label: 'Primal', value: 'Primal' },
+        { label: 'Low FODMAP', value: 'Low FODMAP' },
+        { label: 'Whole30', value: 'Whole30' }
+
+    ]);
 
     useEffect(() => {
 
@@ -85,35 +100,26 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
 
         <View style={{ width: '100%', flex: 1, marginTop: 30 }}>
 
-
             <Heading>Enter your special dietary needs.</Heading>
-            <SubHeading>We'll filter out the things you don't like or need to bring you the most efficient and relevant recipes </SubHeading>
+            <SubHeading>We'll filter out the things you don't like or need to bring you the most efficient and relevant recipes. All you need to do is separate each item with a comma. </SubHeading>
             <View style={styles.verticallySpaced}>
                 <ScrollView>
                     <Text>Diet</Text>
-                    <TextInput
-                        placeholder={"Ex. Vegetarian, Vegan, Pescetarian"}
-                        value={diet || ""}
-                        onChangeText={(text) => setDiet(text)}
+                    <DropDownPicker
+                        open={open}
+                        value={diet}
+                        items={items}
+                        setOpen={setOpen}
+                        setValue={setDiet}
+                        setItems={setItems}
+                        listMode="MODAL"
+                        placeholder="Select a diet"
                         style={[!focused ? styles.input : styles.inputFocused]}
                     />
-                    <View style={styles.tagRow}>
-                        <ScrollView horizontal>
-                            {
-                                diet?.length >= 1 && (
-                                    diet.split(",").map(item => (
-                                        <View key={item} style={styles.tag}>
-                                            <Text style={styles.tagItem}>{item}</Text>
-                                        </View>
 
-                                    ))
-                                )
-                            }
-                        </ScrollView>
-                    </View>
-                    <Text>Food Intololerances</Text>
+                    <Text>Food intolerances</Text>
                     <TextInput
-                        placeholder={"Ex. Dairy, Pork"}
+                        placeholder={"Ex. Dairy,Pork"}
                         value={intolerances || ""}
                         onChangeText={(text) => setIntolerances(text)}
                         style={[!focused ? styles.input : styles.inputFocused]}
@@ -137,7 +143,7 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                     </View>
                     <Text>Excluded foods</Text>
                     <TextInput
-                        placeholder={"Ex. Pistacios, Peaunut Butter"}
+                        placeholder={"Ex. Pistachios,Peaunut Butter"}
                         value={excluded || ""}
                         onChangeText={(text) => setExcluded(text)}
                         style={[!focused ? styles.input : styles.inputFocused]}
@@ -202,7 +208,8 @@ const styles = StyleSheet.create({
         width: '100%',
         borderWidth: 2,
         padding: 16,
-        marginVertical: 16
+        marginVertical: 16,
+        backgroundColor: 'transparent',
     },
     inputFocused: {
         width: '100%',

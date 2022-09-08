@@ -71,7 +71,7 @@ const AuthenticatedRoutes = () => {
                 options={{
                     tabBarLabel: '',
                     tabBarShowLabel: false,
-                    headerShown: true,
+                    headerShown: false,
                     header: (({ route, navigation }) => (<MealsHeader route={route} navigation={navigation} />)),
                     tabBarIcon: () => null,
                     tabBarStyle: { opacity: 0 },

@@ -37,8 +37,8 @@ export default function Videos() {
         let data = await UseGetRecipeVideos({
             query: query,
             type: query,
-            diet: profileInfo.diet,
-            excludeIngredients: profileInfo.excluded,
+            diet: profileInfo.dietary_needs.diet,
+            excludeIngredients: profileInfo.dietary_needs.excluded,
             offset: Math.floor(Math.random() * 15)
         })
         setData(data)
