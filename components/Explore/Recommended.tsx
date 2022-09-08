@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, StyleSheet, View, FlatList, ImageBackground, Platform, Pressable } from 'react-native'
+import { ScrollView, StyleSheet, View, FlatList, ImageBackground, Platform, Pressable, Alert } from 'react-native'
 import { useUserContext } from '../../context/user'
 import Heading from '../../styles/heading'
 import SubHeading from '../../styles/subheading'
@@ -21,8 +21,10 @@ export default function Recommended() {
 
     const { profileInfo } = useUserContext()
     const [data, setData] = React.useState<any>([])
+    const [results, setResults] = React.useState<any>([])
     const [query, setQuery] = React.useState('')
     const [isFetching, setIsFetching] = React.useState(false)
+    const [scrollIndex, setScroll] = React.useState(0)
     const currentDate = new Date();
     const navigation: any = useNavigation()
 
@@ -31,6 +33,7 @@ export default function Recommended() {
 
         if (profileInfo && query) {
             getData()
+            setScroll(0)
         }
 
     }, [query])
@@ -44,8 +47,24 @@ export default function Recommended() {
             dietary_needs: profileInfo.dietary_needs
         })
         setData(data)
+        setResults(data.results)
         setIsFetching(false)
 
+    }
+
+    async function getMoreData() {
+
+        if (results.length < 50) {
+            let newdata = await UseFetchRecipes({
+                query: query,
+                dietary_needs: profileInfo.dietary_needs
+            })
+            setResults((currentResults: any) => [...currentResults, ...newdata.results])
+
+            setScroll(scrollIndex + 10)
+        } else {
+            Alert.alert('Unable to find more recipes , try again later')
+        }
     }
 
     function getTimeOfDay() {
@@ -81,21 +100,25 @@ export default function Recommended() {
             <View style={styles.wrapper}>
                 <View style={styles.titleRow}>
                     <Heading style={{ fontSize: 24 }}>Recommended</Heading>
-                    <Button style={{ width: 100, height: 25, marginTop: 0 }} disabled={true} onPress={() => navigation.navigate('Categories')}>View All</Button>
+                    <Button style={{ width: 100, height: 25, marginTop: 0 }} disabled={false} onPress={() => navigation.navigate('Categories')}>View All</Button>
                 </View>
 
                 <View>
                     <ScrollView>
                         <View style={styles.categoryRow}>
                             <FlatList
-                                data={data.results}
+                                data={results}
                                 keyExtractor={(item: any) => item.id}
-                                //ItemSeparatorComponent={() => <View style={styles.separator} />}
                                 onEndReached={() => {
-
+                                    getMoreData()
                                 }}
+                                onEndReachedThreshold={0.5}
+                                getItemLayout={(data, index) => (
+                                    { length: 320, offset: 320 * index, index }
+                                )}
                                 horizontal={true}
                                 initialNumToRender={5}
+                                initialScrollIndex={scrollIndex}
                                 renderItem={({ item }) => (
                                     <Category name={item.title} image={item.image} id={item.id} navigation={navigation} />
                                 )}

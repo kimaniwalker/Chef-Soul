@@ -1,20 +1,25 @@
 import React from 'react';
-import { View, StyleSheet, Button, Platform } from 'react-native';
-import { Video, AVPlaybackStatus } from 'expo-av';
-import { WebView } from 'react-native-webview';
+import { View, StyleSheet, Platform } from 'react-native';
+import YoutubePlayer from 'react-native-youtube-iframe';
+import Loading from '../Loading';
+
 
 
 export default function VideoItem({ uri }: { uri: string }) {
-    const video = React.useRef<any>(null);
-    const [status, setStatus] = React.useState<any>({});
+    const [isReady, setIsReady] = React.useState(false)
 
+    React.useEffect(() => {
+        const timer = setTimeout(() => setIsReady(true), 2000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (!isReady) return <Loading />
     return (
         <View style={styles.container}>
-            <WebView
-                style={styles.video}
-                source={{
-                    html: `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${uri}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
-                }}
+            <YoutubePlayer
+                height={200}
+                width={340}
+                videoId={uri}
             />
         </View>
     );

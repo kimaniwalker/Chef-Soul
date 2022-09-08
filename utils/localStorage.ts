@@ -1,9 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 export async function storeFavorites(value: any) {
+
     try {
         const jsonValue = JSON.stringify(value)
         await AsyncStorage.setItem('favorites', jsonValue)
+
     } catch (e) {
 
         // saving error
@@ -12,9 +15,8 @@ export async function storeFavorites(value: any) {
 
 export async function removeItem(value: string) {
     await AsyncStorage.removeItem(value)
+
 }
-
-
 
 export async function getFavorites() {
 

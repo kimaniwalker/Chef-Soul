@@ -3,7 +3,6 @@ import { ImageBackground, ScrollView, StyleSheet, View, Platform, Pressable } fr
 import Button from '../../styles/button'
 import Heading from '../../styles/heading'
 import SubHeading from '../../styles/subheading'
-import CategoryItem from './CategoryItem'
 import * as Images from '../../assets'
 import { useNavigation } from '@react-navigation/native';
 
@@ -43,7 +42,7 @@ export default function CategoryThumbnail() {
                             <Category name='sauce' id={109} image={CategoryImages.sauce} />
                             <Category name='salad' id={110} image={CategoryImages.salad} />
                             <Category name='soup' id={111} image={CategoryImages.soup} />
-                            <Category name='salad' id={112} image={CategoryImages.appetizer} />
+                            <Category name='appetizer' id={112} image={CategoryImages.appetizer} />
                         </View>
                     </ScrollView>
                 </View>

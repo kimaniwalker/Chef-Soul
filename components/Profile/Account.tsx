@@ -7,11 +7,14 @@ import SubHeading from "../../styles/subheading";
 import Colors from "../../utils/colors";
 import Loading from "../Loading";
 import { removeItem } from "../../utils/localStorage";
+import { useUserContext } from "../../context/user";
+import { useFavoritesContext } from "../../context/favorites";
 
 
 
 export default function Account({ profileInfo }: { profileInfo: any }) {
-
+    const { setUserId, setIsAuthenticated } = useUserContext()
+    const { favorites } = useFavoritesContext()
     const [loading, setLoading] = useState(false);
     const [username, setUsername] = useState("");
     const [intolerances, setIntolerances] = useState("");
@@ -20,9 +23,9 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
     const [dietary_needs, setDietaryNeeds] = useState({});
     const [avatar_url, setAvatarUrl] = useState("");
     const [focused, setFocused] = useState(false)
-    const [isAuthenticated, setIsAuthenticated] = useState(true)
 
     useEffect(() => {
+
         if (profileInfo) {
             setLoading(true)
             setIntolerances(profileInfo?.dietary_needs.intolerances)
@@ -43,18 +46,17 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
     }) {
         try {
             setLoading(true);
-            const user = supabase.auth.user();
-            if (!user) throw new Error("No user on the session!");
 
             const updates = {
-                id: user.id,
-                username: user.email,
+                id: profileInfo.id,
+                username: profileInfo.username,
                 dietary_needs: {
                     diet,
                     intolerances,
                     excluded
                 },
                 avatar_url,
+                favorites: favorites,
                 updated_at: new Date(),
             };
 
@@ -98,13 +100,10 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                     <View style={styles.tagRow}>
                         <ScrollView horizontal>
                             {
-                                diet.length >= 1 && (
+                                diet?.length >= 1 && (
                                     diet.split(",").map(item => (
-
-
                                         <View key={item} style={styles.tag}>
                                             <Text style={styles.tagItem}>{item}</Text>
-
                                         </View>
 
                                     ))
@@ -122,7 +121,7 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                     <View style={styles.tagRow}>
                         <ScrollView horizontal>
                             {
-                                intolerances.length >= 1 && (
+                                intolerances?.length >= 1 && (
                                     intolerances.split(",").map(item => (
 
 
@@ -146,7 +145,7 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                     <View style={styles.tagRow}>
                         <ScrollView horizontal>
                             {
-                                excluded.length >= 1 && (
+                                excluded?.length >= 1 && (
                                     excluded.split(",").map(item => (
 
 
@@ -169,14 +168,14 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
                     style={{ width: '50%', marginTop: 0 }}
                     onPress={() => updateProfile({ username, dietary_needs, avatar_url })}
                     disabled={loading}
-                >{loading ? "Loading ..." : "Save"}</Button>
+                >{loading ? "Saving..." : "Save"}</Button>
                 <Button
                     style={{ width: '50%', marginTop: 0 }}
                     disabled={loading} onPress={() => {
-                        supabase.auth.signOut()
                         removeItem('user')
                         removeItem('favorites')
-
+                        setUserId(null)
+                        setIsAuthenticated(false)
                     }}>Sign Out</Button>
             </View>
 

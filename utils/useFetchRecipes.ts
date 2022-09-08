@@ -1,5 +1,6 @@
-// @ts-ignore
-import { SPOONACULAR_KEY } from 'react-native-dotenv'
+import Variables from "./Variables"
+
+const SPOONACULAR_KEY = process.env.SPOONACULAR_KEY || Variables.SPOONACULAR_KEY
 
 export async function UseFetchRecipes({ query, dietary_needs, }: { query?: string, dietary_needs?: any }) {
     const RECIPE_URL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${SPOONACULAR_KEY}&query=${query}&diet=${dietary_needs?.diet}&intolerances=${dietary_needs?.intolerances}&excludeIngredients=${dietary_needs?.excludeIngredients}&number=10&sort=random`
@@ -58,12 +59,13 @@ type params = {
     diet?: string,
     includeIngredients?: string,
     excludeIngredients?: string
-    number?: number
+    number?: number,
+    offset?: number
 }
 
 export async function UseGetRecipeVideos(params: params) {
 
-    const RECIPE_URL = `https://api.spoonacular.com/food/videos/search?apiKey=${SPOONACULAR_KEY}&query=${params.query}&diet=${params.diet}&excludeIngredients=${params.excludeIngredients}&type=${params.type}&number=10`
+    const RECIPE_URL = `https://api.spoonacular.com/food/videos/search?apiKey=${SPOONACULAR_KEY}&query=${params.query}&diet=${params.diet}&excludeIngredients=${params.excludeIngredients}&type=${params.type}&number=10&offset=${params.offset}`
 
     const res = await fetch(RECIPE_URL, {
         method: 'GET',

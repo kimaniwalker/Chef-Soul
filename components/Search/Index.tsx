@@ -1,8 +1,6 @@
 import React from 'react'
-import Header from '../../components/Header'
 import { useSearchAutoComplete } from '../../utils/useFetchRecipes'
 import { StyleSheet, TextInput, Platform, View, Alert } from 'react-native'
-import Container from '../../styles/container'
 import Colors from '../../utils/colors'
 import { InfiniteHits } from '../Search/InfiniteHits'
 
@@ -55,7 +53,6 @@ export default function Search() {
 
     return (
         <>
-            <Header logoOnly />
             <View style={{ justifyContent: 'flex-start', padding: 16 }}>
 
                 <TextInput

@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../utils/supabase';
 import 'react-native-url-polyfill/auto'
+import { supabase } from '../utils/supabase';
 import * as SplashScreen from 'expo-splash-screen';
+import { Alert } from 'react-native'
 
 
 // Keep the splash screen visible while we fetch resources
@@ -11,9 +12,7 @@ UserContext.displayName = 'UserContext'
 
 export function UserWrapper({ children }) {
 
-    const user = supabase.auth.user()
-    const session = supabase.auth.session()
-
+    const [userId, setUserId] = useState('')
     const [profileInfo, setProfileInfo] = useState([])
     const [isFetching, setIsFetching] = useState()
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -22,16 +21,7 @@ export function UserWrapper({ children }) {
 
     useEffect(() => {
         fetchUser()
-
-        supabase.auth.onAuthStateChange((event, session) => {
-            if (event == 'SIGNED_OUT') {
-                setIsAuthenticated(false)
-            }
-            if (event == 'SIGNED_IN') {
-                setIsAuthenticated(true)
-            }
-        })
-    }, [user, session])
+    }, [userId, isAuthenticated])
 
     const fetchUser = async () => {
 
@@ -41,6 +31,7 @@ export function UserWrapper({ children }) {
         } catch (e) {
             // error reading value
             setErr(e)
+            Alert.alert(e.message)
         }
     }
 
@@ -51,23 +42,58 @@ export function UserWrapper({ children }) {
             const { data, error, status } = await supabase
                 .from("profiles")
                 .select()
-                .eq("id", user.id)
+                .eq("userId", userId)
+                .single();
+            setProfileInfo(data)
+            if (data) {
+                setIsAuthenticated(true)
+            }
+            if (error) {
+                throw error;
+            }
+
+        } catch (e) {
+            // error reading value
+            setErr(e.message)
+
+        }
+        setIsFetching(false)
+    }
+
+    const checkUserExist = async (email) => {
+        setIsFetching(true)
+
+        try {
+            const { data, error, status } = await supabase
+                .from("profiles")
+                .select()
+                .eq("username", email)
                 .single();
             setProfileInfo(data)
             if (error && status !== 406) {
                 throw error;
+            }
+            if (data) {
+                setIsFetching(false)
+                return data
+            } else {
+                setIsFetching(false)
+                return false
             }
 
 
         } catch (e) {
             // error reading value
             setErr(e.message)
+            Alert.alert(e.message)
         }
-        setIsFetching(false)
+
     }
 
+
+
     return (
-        <UserContext.Provider value={{ user, session, errMsg: err, isFetching, profileInfo, isAuthenticated, setIsAuthenticated }} >
+        <UserContext.Provider value={{ errMsg: err, isFetching, profileInfo, isAuthenticated, setIsAuthenticated, userId, setUserId, checkUserExist }} >
             {children}
         </UserContext.Provider>
     );
