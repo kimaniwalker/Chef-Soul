@@ -40,7 +40,6 @@ export default function App() {
   });
 
   React.useEffect(() => {
-
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
     });
 

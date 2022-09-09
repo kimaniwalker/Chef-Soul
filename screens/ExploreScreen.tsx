@@ -24,7 +24,7 @@ export default function ExploreScreen(props: ExploreProps) {
             if (profileInfo && token && !profileInfo.push_token) {
                 updateProfile(token!)
             }
-        }).then(() => cancelNotifications());
+        });
     }, [])
 
     async function registerForPushNotificationsAsync() {
@@ -56,10 +56,6 @@ export default function ExploreScreen(props: ExploreProps) {
             id: profileInfo.id,
             push_token: token
         })
-    }
-
-    async function cancelNotifications() {
-        await Notifications.cancelAllScheduledNotificationsAsync();
     }
 
     if (isFetching) return <Loading />
