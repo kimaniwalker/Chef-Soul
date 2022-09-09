@@ -35,7 +35,9 @@ export default function Account({ profileInfo }: { profileInfo: any }) {
         { label: 'Paleo', value: 'Paleo' },
         { label: 'Primal', value: 'Primal' },
         { label: 'Low FODMAP', value: 'Low FODMAP' },
-        { label: 'Whole30', value: 'Whole30' }
+        { label: 'Whole30', value: 'Whole30' },
+        { label: 'No Dietary Preference', value: '' },
+
 
     ]);
 
