@@ -5,11 +5,9 @@ import Header from '../components/Header'
 import Recommended from '../components/Explore/Recommended'
 import Videos from '../components/Explore/Videos'
 import Loading from '../components/Loading'
-import Search from '../components/Search/Index'
 import * as Notifications from 'expo-notifications';
 import { useUserContext } from '../context/user'
 import updateProfileToken from '../utils/useUpdateUser'
-
 
 type ExploreProps = {
 
@@ -26,7 +24,7 @@ export default function ExploreScreen(props: ExploreProps) {
             if (profileInfo && token && !profileInfo.push_token) {
                 updateProfile(token!)
             }
-        });
+        }).then(() => cancelNotifications());
     }, [])
 
     async function registerForPushNotificationsAsync() {
@@ -60,6 +58,9 @@ export default function ExploreScreen(props: ExploreProps) {
         })
     }
 
+    async function cancelNotifications() {
+        await Notifications.cancelAllScheduledNotificationsAsync();
+    }
 
     if (isFetching) return <Loading />
     return (

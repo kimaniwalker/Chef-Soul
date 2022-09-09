@@ -12,6 +12,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import MealsScreen from '../screens/MealsScreen'
 import MealsItem from '../screens/MealsItem';
 
+
 const AuthenticatedRoutes = () => {
     const Tab = createBottomTabNavigator();
 
@@ -77,6 +78,7 @@ const AuthenticatedRoutes = () => {
                     tabBarStyle: { opacity: 0 },
                     tabBarItemStyle: { position: 'absolute' }
                 }} name="MealsItem" component={MealsItem} />
+
         </Tab.Navigator>
 
     )

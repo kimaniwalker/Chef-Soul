@@ -7,7 +7,20 @@ import Loading from './components/Loading';
 import AuthenticatedRoutes from './utils/AuthenticatedRoutes';
 import AuthScreen from './screens/AuthScreen'
 import * as Notifications from 'expo-notifications';
-import updateProfileToken from './utils/useUpdateUser';
+import * as Linking from 'expo-linking';
+const prefix = Linking.createURL('/');
+const config = {
+  screens: {
+    Explore: 'Explore',
+    Categories: 'Categories',
+    Favorites: 'Favorites',
+    Search: 'Search',
+    Profile: 'Profile',
+    Meals: 'Meals',
+    MealsItem: 'MealsItem/:id',
+  },
+};
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -18,9 +31,6 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
-  const [isReady, setIsReady] = React.useState(false)
-  const [expoPushToken, setExpoPushToken] = React.useState('');
-  const [notification, setNotification] = React.useState<any>(false);
   const notificationListener = React.useRef<any>();
   const responseListener = React.useRef<any>();
 
@@ -32,11 +42,14 @@ export default function App() {
   React.useEffect(() => {
 
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
+      if (response.notification.request.content.data.url) {
+        const url = response.notification.request.content.data.url;
+        Linking.openURL(url as string);
+      }
+
     });
 
     return () => {
@@ -46,28 +59,17 @@ export default function App() {
   }, []);
 
 
-  async function triggerNotification() {
-    await schedulePushNotification();
-  }
-
-  async function schedulePushNotification() {
-    await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "ChefSoul",
-        body: 'Choose from thousands of online recipes and find the perfect meal for you and your family',
-        sound: 'jingle.wav',
-        data: { data: 'goes here' },
-      },
-      trigger: { seconds: 2 },
-    });
-  }
-
-
-
   const Navigation = () => {
     const { isAuthenticated, profileInfo } = useUserContext()
+
+
+    const linking = {
+      prefixes: [prefix],
+      config,
+    };
+
     return (
-      <NavigationContainer>
+      <NavigationContainer linking={linking} fallback={<Loading />}>
         {!isAuthenticated && (
           <AuthScreen />
         )}
